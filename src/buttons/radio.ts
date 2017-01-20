@@ -1,4 +1,4 @@
-import {Directive, forwardRef, Optional, Input, Renderer, ElementRef, OnDestroy} from '@angular/core';
+import {Directive, forwardRef, Optional, Input, HostBinding, Renderer, ElementRef, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 const NGB_RADIO_VALUE_ACCESSOR = {
@@ -13,7 +13,7 @@ const NGB_RADIO_VALUE_ACCESSOR = {
  */
 @Directive({
   selector: '[ngbRadioGroup]',
-  host: {'data-toggle': 'buttons', 'class': 'btn-group'},
+  host: {'data-toggle': 'buttons'},
   providers: [NGB_RADIO_VALUE_ACCESSOR]
 })
 export class NgbRadioGroup implements ControlValueAccessor {
@@ -23,6 +23,9 @@ export class NgbRadioGroup implements ControlValueAccessor {
 
   get disabled() { return this._disabled; }
   set disabled(isDisabled: boolean) { this.setDisabledState(isDisabled); }
+
+  @Input('orientation') orientation: 'horizontal' | 'vertical';
+  @HostBinding('class') get valid() { return 'btn-group'; }
 
   onChange = (_: any) => {};
   onTouched = () => {};
